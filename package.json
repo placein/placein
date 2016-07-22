@@ -1,0 +1,55 @@
+{
+  "name": "placein",
+  "version": "0.0.10",
+  "description": "A website",
+  "homepage": "http://www.placein.be",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/placein/placein"
+  },
+  "bugs": {
+    "email": "simon.vreux@gmail.com",
+    "url": "https://github.com/placein/placein/issues"
+  },
+  "scripts": {
+    "gulp-require": "sudo gem install scss_lint"
+  },
+  "author": {
+    "name": "Simon Vreux",
+    "email": "simon.vreux@gmail.com",
+    "url": "http://www.simon.cool"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "del": "^2.2.1",
+    "es6-promise": "~3.2.1",
+    "gulp": "~3.9.1",
+    "gulp-autoprefixer": "~3.1.0",
+    "gulp-bump": "^2.2.0",
+    "gulp-cached": "^1.1.0",
+    "gulp-combine-media-queries": "~0.2.0",
+    "gulp-conventional-changelog": "^1.1.0",
+    "gulp-csso": "~2.0.0",
+    "gulp-git": "^1.9.0",
+    "gulp-header": "^1.8.7",
+    "gulp-if": "~2.0.1",
+    "gulp-iife": "^0.3.0",
+    "gulp-imagemin": "^3.0.1",
+    "gulp-include": "~2.3.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-load-plugins": "~1.2.4",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "~1.2.2",
+    "gulp-run-sequence": "~0.3.2",
+    "gulp-sass": "~2.3.2",
+    "gulp-scss-lint": "^0.4.0",
+    "gulp-sourcemaps": "~1.6.0",
+    "gulp-strip-css-comments": "~1.2.0",
+    "gulp-strip-debug": "^1.1.0",
+    "gulp-stylestats": "^1.2.1",
+    "gulp-todo": "^4.1.0",
+    "gulp-uglify": "~1.5.4",
+    "jshint": "^2.9.2",
+    "jshint-stylish": "^2.2.0"
+  }
+}

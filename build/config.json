@@ -1,0 +1,43 @@
+{
+    "global": {
+        "assetsDir" : "public/assets"
+    },
+
+    "sass": {
+        "input"      : "resources/scss/",
+        "output"     : "public/assets/css/",
+        "linter"     : "build/scss-lint.yml",
+        "lintReport" : "build/reports/scss-lint-report.json",
+        "log"        : false,
+        "sourcemaps" : true,
+        "styleStats" : "build/reports/css-style-stats",
+        "support"    : ["last 2 versions", "> 1%"]
+    },
+
+    "js": {
+        "input"      : "resources/js/",
+        "output"     : "public/assets/js/",
+        "jshintFail" : false
+    },
+
+    "img": {
+        "input"  : "resources/img/",
+        "output" : "public/assets/img/"
+    },
+
+    "todo": {
+        "input"  : "resources/",
+        "output" : "build/reports/"
+    },
+
+    "git" : {
+        "token" : " 131fca1ff9f44a866fd7db23026bfef5e0f233a5"
+    },
+
+    "messages": {
+        "sassOver" : "Sass tasks finished",
+        "jsOver"   : "Javascript tasks finished",
+        "imgOver"  : "Images optimized",
+        "watch"    : "File changed"
+    }
+}

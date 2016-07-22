@@ -1,0 +1,11 @@
+@import 'components/test';
+
+$blue: #fff;
+
+body {
+  background: $blue;
+}
+
+h1:before {
+  content: '%';
+}
