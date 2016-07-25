@@ -172,14 +172,14 @@ gulp.task('bump-version', function () {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('commit-changes', function () {
+gulp.task('git-commit', function () {
     var message = args.m || o.release.defaultMessage;
     return gulp.src('.')
         .pipe(p.git.add())
         .pipe(p.git.commit(message));
 });
 
-gulp.task('push-changes', function (callback) {
+gulp.task('git-push', function (callback) {
     p.git.push('origin', 'master', callback);
 });
 
@@ -247,6 +247,10 @@ gulp.task('watch', function () {
  * Task bundles
  *--------------------------------------------------------------------------
  */
+gulp.task('start', function () {
+    p.runSequence('git-update');
+});
+
 gulp.task('css', function () {
     p.runSequence('scss-lint', 'scss-compile', 'scss-minify', 'notify-scss');
 });
@@ -260,7 +264,7 @@ gulp.task('img', function () {
 });
 
 gulp.task('release', function () {
-    p.runSequence('bump-version',/* 'changelog',*/ 'commit-changes', 'push-changes');
+    p.runSequence('bump-version',/* 'changelog',*/ 'git-commit', 'git-push');
 });
 
 gulp.task('reports', function () {
