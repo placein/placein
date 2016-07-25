@@ -1,7 +1,6 @@
+// TODO: finish local server
 // TODO: add jshintrc
 // TODO: fix changelog
-// TODO: commit
-// TODO: local server
 // TODO: javascript tests
 
 /*
@@ -24,17 +23,21 @@ var o    = require('./build/config.json');
 // Load arguments from terminal
 var args = minimist(process.argv.slice(2));
 
+// Browser sync
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
+
 // Polyfill ES6 promises
 require('es6-promise').polyfill();
 
 // Comment banner
 var banner = ['/**',
-  ' * <%= pkg.name %> - <%= pkg.description %>',
-  ' * @version v<%= pkg.version %>',
-  ' * @link <%= pkg.homepage %>',
-  ' * @author <%= pkg.author.name %> (<%= pkg.author.email %>)',
-  ' */',
-  ''].join('\n');
+    ' * <%= pkg.name %> - <%= pkg.description %>',
+    ' * @version v<%= pkg.version %>',
+    ' * @link <%= pkg.homepage %>',
+    ' * @author <%= pkg.author.name %> (<%= pkg.author.email %>)',
+    ' */',
+    ''].join('\n');
 
 /*
  *-----------------------------------------------------------------------------
@@ -146,7 +149,17 @@ gulp.task('js-minify', function() {
  */
 gulp.task('copy-fonts', function () {
     return gulp.src(o.fonts.input + '**/*.{ttf,woff,eof,svg}')
-      .pipe(gulp.dest(o.fonts.output));
+        .pipe(gulp.dest(o.fonts.output));
+});
+
+gulp.task('serve', function() {
+    browserSync({
+        server: {
+            baseDir: 'public'
+        }
+    });
+
+    gulp.watch(['*.html', 'resources/**/*.css', 'resources/**/*.js'], {cwd: 'app'}, reload);
 });
 
 /*
@@ -181,6 +194,12 @@ gulp.task('git-commit', function () {
 
 gulp.task('git-push', function (callback) {
     p.git.push('origin', 'master', callback);
+});
+
+gulp.task('git-pull', function () {
+    p.git.pull('origin', 'master', {}, function (err) {
+        if (err) throw err;
+    });
 });
 
 /*
@@ -248,7 +267,7 @@ gulp.task('watch', function () {
  *--------------------------------------------------------------------------
  */
 gulp.task('start', function () {
-    p.runSequence('git-update');
+    p.runSequence('git-pull', 'default');
 });
 
 gulp.task('css', function () {
