@@ -10,15 +10,19 @@
  *-----------------------------------------------------------------------------
  */
 // Load packages
-var gulp = require('gulp');
-var gulpif = require('gulp-if');
-var del = require('del');
+var gulp          = require('gulp');
+var gulpif        = require('gulp-if');
+var del           = require('del');
 var jshintStylish = require('jshint-stylish');
-var plugins = p = require('gulp-load-plugins')({ replaceString: /\bgulp[\-.]/ });
+var minimist      = require('minimist');
+var p             = require('gulp-load-plugins')({ replaceString: /\bgulp[\-.]/ });
 
 // Load config
-var pkg = require('./package.json');
-var config = o = require('./build/config.json');
+var pkg  = require('./package.json');
+var o    = require('./build/config.json');
+
+// Load arguments from terminal
+var args = minimist(process.argv.slice(2));
 
 // Polyfill ES6 promises
 require('es6-promise').polyfill();
@@ -151,36 +155,33 @@ gulp.task('copy-fonts', function () {
  *-----------------------------------------------------------------------------
  * Write changelog
  */
-gulp.task('changelog', function () {
-    return gulp.src('CHANGELOG.md', {
-            buffer: false
-        })
-        .pipe(p.conventionalChangelog({
-            preset: 'angular' // Or to any other commit message convention you use.
-        }))
+// gulp.task('changelog', function () {
+//     return gulp.src('CHANGELOG.md', {
+//             buffer: false
+//         })
+//         .pipe(p.conventionalChangelog({
+//             preset: 'angular' // Or to any other commit message convention you use.
+//         }))
+//         .pipe(gulp.dest('./'));
+// });
+
+gulp.task('bump-version', function () {
+    var type = args.t || o.release.defaultType;
+    return gulp.src(['./package.json'])
+        .pipe(p.bump({type: type}).on('error', console.log))
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('bump-version', function () {
-// We hardcode the version change type to 'patch' but it may be a good idea to
-// use minimist (https://www.npmjs.com/package/minimist) to determine with a
-// command argument whether you are doing a 'major', 'minor' or a 'patch' change.
-  return gulp.src(['./package.json'])
-    .pipe(p.bump({type: "patch"}).on('error', console.log))
-    .pipe(gulp.dest('./'));
-});
-
 gulp.task('commit-changes', function () {
-  return gulp.src('.')
-    .pipe(p.git.add())
-    .pipe(p.git.commit('[Prerelease] Bumped version number'));
+    var message = args.m || o.release.defaultMessage;
+    return gulp.src('.')
+        .pipe(p.git.add())
+        .pipe(p.git.commit(message));
 });
 
-gulp.task('push-changes', function (cb) {
-  p.git.push('origin', 'master', cb);
+gulp.task('push-changes', function (callback) {
+    p.git.push('origin', 'master', callback);
 });
-
-
 
 /*
  *-----------------------------------------------------------------------------
@@ -259,7 +260,7 @@ gulp.task('img', function () {
 });
 
 gulp.task('release', function () {
-    p.runSequence('bump-version'/*, 'changelog'*/, 'commit-changes', 'push-changes');
+    p.runSequence('bump-version',/* 'changelog',*/ 'commit-changes', 'push-changes');
 });
 
 gulp.task('reports', function () {

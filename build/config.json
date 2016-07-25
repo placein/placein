@@ -30,8 +30,9 @@
         "output" : "build/reports/"
     },
 
-    "git" : {
-        "token" : "131fca1ff9f44a866fd7db23026bfef5e0f233a5"
+    "release" : {
+        "defaultMessage" : "General release",
+        "defaultType"    : "patch"
     },
 
     "messages": {
