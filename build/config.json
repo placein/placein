@@ -17,7 +17,8 @@
     "js": {
         "input"      : "resources/js/",
         "output"     : "public/assets/js/",
-        "jshintFail" : false
+        "jshintFail" : true,
+        "reports"    : "build/reports/plato"
     },
 
     "img": {

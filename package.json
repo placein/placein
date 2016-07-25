@@ -1,6 +1,6 @@
 {
   "name": "placein",
-  "version": "1.2.7",
+  "version": "2.0.0",
   "description": "A website",
   "homepage": "http://www.placein.be",
   "repository": {
@@ -40,6 +40,7 @@
     "gulp-jshint": "^2.0.1",
     "gulp-load-plugins": "~1.2.4",
     "gulp-notify": "^2.2.0",
+    "gulp-plato": "^1.0.2",
     "gulp-rename": "~1.2.2",
     "gulp-run-sequence": "~0.3.2",
     "gulp-sass": "~2.3.2",

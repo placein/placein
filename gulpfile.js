@@ -1,6 +1,5 @@
 // TODO: finish local server
 // TODO: add jshintrc
-// TODO: fix changelog
 // TODO: javascript tests
 
 /*
@@ -80,15 +79,6 @@ gulp.task('scss-minify', function () {
         .pipe(gulp.dest(o.sass.output));
 });
 
-gulp.task('css-stats', function () {
-    return gulp.src(o.sass.output + '*.min.css')
-        .pipe(p.stylestats({
-            type: 'json',
-            outfile: true,
-        }))
-        .pipe(gulp.dest(o.sass.styleStats));
-});
-
 /*
  *-----------------------------------------------------------------------------
  * Javascript
@@ -165,7 +155,8 @@ gulp.task('serve', function() {
  *-----------------------------------------------------------------------------
  * Release
  *-----------------------------------------------------------------------------
- * Write changelog
+ * Write changelog, bump version and commit on Github
+ * Plugins used: conventional-changelog - bump - git
  */
 gulp.task('changelog', function () {
     return gulp.src('CHANGELOG.md', {
@@ -205,12 +196,36 @@ gulp.task('git-pull', function () {
  *-----------------------------------------------------------------------------
  * Reports
  *-----------------------------------------------------------------------------
- * Write a TODO.md
+ * Write a to-do file, a CSS statistics reports and a JS complexity report
+ * Plugins used: todo - stylestats - plato
  */
 gulp.task('todo', function () {
     return gulp.src(o.todo.input + '**/*.js')
         .pipe(p.todo())
         .pipe(gulp.dest(o.todo.output));
+});
+
+gulp.task('css-stats', function () {
+    return gulp.src(o.sass.output + '*.min.css')
+        .pipe(p.stylestats({
+            type: 'json',
+            outfile: true,
+        }))
+        .pipe(gulp.dest(o.sass.styleStats));
+});
+
+gulp.task('js-plato', function () {
+    return gulp.src(o.js.input + '**/*.js')
+        .pipe(p.plato(o.js.reports, {
+            jshint: {
+                options: {
+                    strict: true
+                }
+            },
+            complexity: {
+                trycatch: true
+            }
+        }));
 });
 
 /*
@@ -221,7 +236,7 @@ gulp.task('todo', function () {
  */
 gulp.task('notify', function () {
     var task = this.seq[this.seq.length - 1],
-        message = o.messages[task] || o.messages.default;
+        message = o.messages[task] || '[' + task + ']' + o.messages.default;
     return gulp.src('').pipe(p.notify(message));
 });
 
