@@ -282,7 +282,7 @@ gulp.task('img', function () {
     p.runSequence('img-optimize', 'notify-img');
 });
 
-gulp.task('release', function () {
+gulp.task('commit', function () {
     p.runSequence('bump-version',/* 'changelog',*/ 'git-commit', 'git-push');
 });
 

@@ -1,6 +1,23 @@
-/vendor
-/node_modules
-/public/storage
+# Laravel
+vendor:
+public/storage/
 Homestead.yaml
 Homestead.json
+bootstrap/cache/
+.env.*.php
+.env.php
 .env
+
+#Composer
+composer.phar
+vendor/
+
+# Npm
+node_modules/
+logs
+*.log
+npm-debug.log*
+
+# Sass
+.sass-cache/
+*.css.map
