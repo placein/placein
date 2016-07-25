@@ -221,23 +221,27 @@ gulp.task('todo', function () {
  * Display a desktop notification
  */
 gulp.task('notify-scss', function () {
-     return gulp.src('').pipe(p.notify(o.messages.sassOver));
+     return gulp.src('').pipe(p.notify(o.messages.sass));
 });
 
 gulp.task('notify-js', function () {
-     return gulp.src('').pipe(p.notify(o.messages.jsOver));
+     return gulp.src('').pipe(p.notify(o.messages.js));
 });
 
 gulp.task('notify-img', function () {
-     return gulp.src('').pipe(p.notify(o.messages.imgOver));
+     return gulp.src('').pipe(p.notify(o.messages.img));
 });
 
 gulp.task('notify-reports', function () {
-     return gulp.src('').pipe(p.notify(o.messages.reportsOver));
+     return gulp.src('').pipe(p.notify(o.messages.reports));
 });
 
 gulp.task('notify-watch', function () {
      return gulp.src('').pipe(p.notify(o.messages.watch));
+});
+
+gulp.task('notify-commit', function () {
+     return gulp.src('').pipe(p.notify(o.messages.commit));
 });
 
 /*
@@ -283,7 +287,7 @@ gulp.task('img', function () {
 });
 
 gulp.task('commit', function () {
-    p.runSequence('bump-version',/* 'changelog',*/ 'git-commit', 'git-push');
+    p.runSequence('bump-version',/* 'changelog',*/ 'git-commit', 'git-push', 'notify-commit');
 });
 
 gulp.task('reports', function () {

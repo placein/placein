@@ -36,9 +36,10 @@
     },
 
     "messages": {
-        "sassOver" : "Sass tasks finished",
-        "jsOver"   : "Javascript tasks finished",
-        "imgOver"  : "Images optimized",
-        "watch"    : "File changed"
+        "sass"   : "Sass tasks finished",
+        "js"     : "Javascript tasks finished",
+        "img"    : "Images optimized",
+        "watch"  : "File changed",
+        "commit" : "Commited to Github"
     }
 }
