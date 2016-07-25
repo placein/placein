@@ -96,7 +96,6 @@ gulp.task('css-stats', function () {
  * Compile and minify Javascript files
  * Plugins used: include - strip-debug - uglify - rename - iife (immediately invoked function expression)
  */
-
 gulp.task('js-hint', function() {
     gulp.src(o.js.input + '**/*.js')
         .pipe(p.jshint())
@@ -168,15 +167,15 @@ gulp.task('serve', function() {
  *-----------------------------------------------------------------------------
  * Write changelog
  */
-// gulp.task('changelog', function () {
-//     return gulp.src('CHANGELOG.md', {
-//             buffer: false
-//         })
-//         .pipe(p.conventionalChangelog({
-//             preset: 'angular' // Or to any other commit message convention you use.
-//         }))
-//         .pipe(gulp.dest('./'));
-// });
+gulp.task('changelog', function () {
+    return gulp.src('CHANGELOG.md', {
+            buffer: false
+        })
+        .pipe(p.conventionalChangelog({
+            preset: 'angular' // Or to any other commit message convention you use.
+        }))
+        .pipe(gulp.dest('./'));
+});
 
 gulp.task('bump-version', function () {
     var type = args.t || o.release.defaultType;
@@ -220,28 +219,10 @@ gulp.task('todo', function () {
  *-----------------------------------------------------------------------------
  * Display a desktop notification
  */
-gulp.task('notify-scss', function () {
-     return gulp.src('').pipe(p.notify(o.messages.sass));
-});
-
-gulp.task('notify-js', function () {
-     return gulp.src('').pipe(p.notify(o.messages.js));
-});
-
-gulp.task('notify-img', function () {
-     return gulp.src('').pipe(p.notify(o.messages.img));
-});
-
-gulp.task('notify-reports', function () {
-     return gulp.src('').pipe(p.notify(o.messages.reports));
-});
-
-gulp.task('notify-watch', function () {
-     return gulp.src('').pipe(p.notify(o.messages.watch));
-});
-
-gulp.task('notify-commit', function () {
-     return gulp.src('').pipe(p.notify(o.messages.commit));
+gulp.task('notify', function () {
+    var task = this.seq[this.seq.length - 1],
+        message = o.messages[task] || o.messages.default;
+    return gulp.src('').pipe(p.notify(message));
 });
 
 /*
@@ -275,23 +256,23 @@ gulp.task('start', function () {
 });
 
 gulp.task('css', function () {
-    p.runSequence('scss-lint', 'scss-compile', 'scss-minify', 'notify-scss');
+    p.runSequence('scss-lint', 'scss-compile', 'scss-minify', 'notify');
 });
 
 gulp.task('js', function () {
-    p.runSequence('js-hint', 'js-compile', 'js-minify', 'notify-js');
+    p.runSequence('js-hint', 'js-compile', 'js-minify', 'notify');
 });
 
-gulp.task('img', function () {
-    p.runSequence('img-optimize', 'notify-img');
+gulp.task('imgs', function () {
+    p.runSequence('img-optimize', 'notify');
 });
 
 gulp.task('commit', function () {
-    p.runSequence('bump-version',/* 'changelog',*/ 'git-commit', 'git-push', 'notify-commit');
+    p.runSequence('bump-version', 'changelog', 'git-commit', 'git-push', 'notify');
 });
 
 gulp.task('reports', function () {
-    p.runSequence('css-stats', 'todo');
+    p.runSequence('css-stats', 'todo', 'notify');
 });
 
 gulp.task('default', ['css', 'js', 'img']);

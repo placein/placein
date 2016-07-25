@@ -1,6 +1,6 @@
 /**
  * placein - A website
- * @version v1.2.3
+ * @version v1.2.6
  * @link http://www.placein.be
  * @author Simon Vreux (simon.vreux@gmail.com)
  */

@@ -36,10 +36,12 @@
     },
 
     "messages": {
-        "sass"   : "Sass tasks finished",
-        "js"     : "Javascript tasks finished",
-        "img"    : "Images optimized",
-        "watch"  : "File changed",
-        "commit" : "Commited to Github"
+        "default" : "Task finished",
+        "css"     : "CSS compiled",
+        "js"      : "Javascript tasks finished",
+        "img"     : "Images optimized",
+        "watch"   : "File changed",
+        "commit"  : "Commited to Github",
+        "reports" : "Reports created"
     }
 }
