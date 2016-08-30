@@ -4,11 +4,10 @@ var del        = require('del');
 var minimist   = require('minimist');
 var requireDir = require('require-dir');
 
-requireDir('./gulp/*.js');
+requireDir('./gulp');
 
 // Load config
 var pkg  = require('./package.json');
-var o    = require('./gulp/config.json');
 
 // Load arguments from terminal
 var args = minimist(process.argv.slice(2));
@@ -24,3 +23,7 @@ var banner = ['/**',
     ' * @author <%= pkg.author.name %> (<%= pkg.author.email %>)',
     ' */',
     ''].join('\n');
+
+gulp.task('build', ['sass']);
+
+gulp.task('default', ['build']);

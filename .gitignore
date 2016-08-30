@@ -1,6 +1,5 @@
 # Project specific
 public/assets/
-build/reports/
 
 # Laravel
 vendor:
